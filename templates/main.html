@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>SANDESH 2.0</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+	
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="../static/js/findByTheme.js"></script> -->
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
+</head>
+<script src="../static/js/findByTheme.js"></script>
+<!-- this styling code is for changing size of place holder attribute -->
+
+<style >
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   color: red;
+   font-size: 12pt; 
+}
+::-moz-placeholder { /* Firefox 19+ */
+   color: red;
+   font-size: 12pt; 
+}
+:-ms-input-placeholder { /* IE 10+ */
+   color: red;
+   font-size: 12pt; 
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: red;
+   font-size: 12pt;
+}
+
+<!-- this is for styling the horizontal below the SANDESH 2.0 Heading -->
+
+hr.style1 {
+    border-top: 1px dashed #8c8b8b;
+}
+
+
+.data_tables {
+
+    max-height: 400px;
+    overflow: scroll;
+}
+
+.webform label {
+    width:200px;
+   vertical-align:top;
+    text-align:right;
+    float: left
+}
+
+</style>
+<script type="text/javascript">
+	      google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['State Code', 'State',   'Population'],
+          ['IN-UP','Uttar Pradesh', 199581477],
+          ['IN-UT', 'Uttarakhand', 10116752],
+    ['IN-MH','Maharashtra', 112372972],
+    ['IN-BR','Bihar', 103804637],
+    ['IN-WB','West Bengal', 91347736],
+    ['IN-MP','Madhya Pradesh', 72597565],
+    ['IN-TN','Tamil Nadu', 72138958],
+    ['IN-RJ','Rajasthan', 68621012],
+    ['IN-KA','Karnataka', 61130704],
+    ['IN-GJ','Gujarat', 60383628],
+    ['IN-AP','Andhra Pradesh', 49386799],
+    ['IN-OR','Odisha', 41947358],
+    ['IN-TG','Telangana', 35286757],
+    ['IN-KL','Kerala', 33387677],
+    ['IN-JH','Jharkhand', 32966238],
+    ['IN-AS','Assam', 31169272],
+    ['IN-PB','Punjab', 27704236],
+    ['IN-CT','Chhattisgarh', 25540196],
+    ['IN-HR','Haryana', 25353081],
+    ['IN-JK','Jammu and Kashmir', 12548926],    
+    ['IN-HP','Himachal Pradesh', 6856509],
+    ['IN-TR','Tripura', 3671032],
+    ['IN-ML','Meghalaya', 2964007],
+    ['IN-MN','Manipur', 2721756],
+    ['IN-NL','Nagaland', 1980602],
+    ['IN-GA','Goa', 1457723],
+    ['IN-AR','Arunachal Pradesh', 1382611],
+    ['IN-MZ','Mizoram', 1091014],
+    ['IN-SK','Sikkim', 607688],
+    ['IN-DL','Delhi', 16753235],
+    ['IN-PY','Puducherry', 1244464],
+    ['IN-CH','Chandigarh', 1054686],
+    ['IN-AN','Andaman and Nicobar Islands', 379944],
+    ['IN-DN','Dadra and Nagar Haveli', 342853],
+    ['IN-DD','Daman and Diu', 242911],
+    ['IN-LD','Lakshadweep', 64429]
+        ]);
+
+        var options = {
+          region: 'IN', // India
+	  domain: 'IN',
+          //colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
+          backgroundColor: '#81d4fa',
+         // datalessRegionColor: '#f8bbd0',
+          defaultColor: '#f5f5f5',
+          displayMode: 'regions',
+    	  resolution: 'provinces',
+          enableRegionInteractivity: true
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('geochart-colors'));
+       
+       function myClickHandler(){
+        var selection = chart.getSelection();
+        var message = '';
+        for (var i = 0; i < selection.length; i++) {
+            var item = selection[i];
+		//alert(item.value);	
+            if (item.row != null && item.column != null) {
+                message += '{row:' + item.row + ',column:' + item.column + '}';
+            } else if (item.row != null) {
+		var str=data.getFormattedValue(item.row,0);
+                message += '{row:' + item.row + '}';
+            } else if (item.column != null) {
+                message += '{column:' + item.column + '}';
+            }
+        }
+        if (message == '') {
+            message = 'nothing';
+        }
+        alert('You selected ' + str);
+    }
+       
+       google.visualization.events.addListener(chart, 'select', myClickHandler);
+       
+        chart.draw(data, options);
+        
+      };
+  
+</script>
+
+
+
+<body>
+
+	<div class="container">
+		
+		<div class="header">
+	        <div class="jumbotron " style="height:150px">
+	            <h1 class="text-muted " align= "left">Sandesh</h1>
+		    <p class="lead" style="font-size:15px">A Semantic Data Mesh Over Indian Open Data ( powered by Linked Open Data )</p>
+		</div>
+      		</div>
+		<div class="panel panel-primary">
+           	 <div class="panel-heading" id ="table_data"><font size="3">Search </font></div>
+		 <div class="panel-body">
+		<form action="{{ url_for('goindex') }}" method="post">
+                
+                <label for="inputTheme" align="left" style = "position: relative" ><font size="3">Search by Theme</font></label>
+            
+                <input type="text" style="width: 400px; height: 40px; position: relative;"  name="inputTheme" id="inputTheme"  class="form-control" width:10px placeholder="Enter theme" autofocus/>
+
+                <button type="submit"id="btnFindByTheme"   style="width: 200px; height: 40px; position: relative; margin-top: 5px" class="btn btn-lg btn-primary btn-block" value = "" type="button" width:20%>Search</button> 
+            </form>
+	
+		</div>
+	</div>
+		<hr class= "style1">
+		<!--<a href="{{ url_for('goindex') }}">Next Page</a>-->
+		<div class="row">
+			<div class="col-md-7">
+				<div id="geochart-colors" style="width: 650px; height: 433px;"></div>
+			</div>
+			<div class="col-md-4">
+    				<div class="flexslider"><!-- image slider -->
+      <ul class="slides">
+        <li><img src="/images/who1_1.jpg" alt="" /></li>
+        <li><img src="/images/who2_1.jpg" alt="" /></li>
+
+        <li><img src="/images/who3_1.jpg" alt="" /></li>
+      </ul>
+    </div>
+ 
+			</div>
+		<br/><br/>
+		</div>
+
+
+
+
+	</div>
+
+</body>
+ 

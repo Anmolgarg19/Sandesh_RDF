@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>SANDESH 2.0</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+	
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="../static/js/findByTheme.js"></script> -->
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+ 
+</head>
+ 
+
+<script src="../static/js/findByTheme.js"></script>
+<!-- this styling code is for changing size of place holder attribute -->
+
+<style >
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   color: red;
+   font-size: 12pt; 
+}
+::-moz-placeholder { /* Firefox 19+ */
+   color: red;
+   font-size: 12pt; 
+}
+:-ms-input-placeholder { /* IE 10+ */
+   color: red;
+   font-size: 12pt; 
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: red;
+   font-size: 12pt;
+}
+
+<!-- this is for styling the horizontal below the SANDESH 2.0 Heading -->
+
+hr.style1 {
+    border-top: 1px dashed #8c8b8b;
+}
+
+
+.data_tables {
+
+    max-height: 400px;
+    overflow: scroll;
+
+
+}
+
+
+
+.webform label {
+    width:200px;
+   vertical-align:top;
+    text-align:right;
+    float: left
+}
+
+circle {
+
+  -webkit-transition: all 2s ease-out;
+  -moz-transition: all 2s ease-out;
+  -ms-transition: all 2s ease-out;
+  -o-transition: all 2s ease-out;
+  transition: all 2s ease;
+}
+
+circle:hover {
+ 	 fill: blue;
+	 r: 16;
+	stroke:black;
+}
+</style> 
+ <script>
+	function indexonloadfunc()
+	{
+          var theme = "{{ theme }}";
+	  //alert(theme);
+	  indexinfo(theme);
+	}
+   	
+	window.onload=indexonloadfunc;
+</script>
+<body  >
+ 
+    <div class="container" >
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="{{ url_for('gohome') }}">Home</a>
+                    </li>
+                    <!--li role="presentation"><a href="#">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    </li-->
+                </ul>
+            </nav>
+		
+        <div class="jumbotron " style="height:150px">
+            <h1 class="text-muted " align= "left">Sandesh</h1>
+	<p class="lead" style="font-size:15px">A Semantic Data Mesh Over Indian Open Data ( powered by Linked Open Data )</p>
+	</div>
+      </div>
+ 
+        <hr class= "style1">
+
+     <!--   <div class="jumbotron ">
+            <!--<h1 align="center">WELCOME TO SANDESH</h1>
+            <p class="lead"></p>
+            <!--p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up today</a>
+            </p>
+            
+          </div>-->
+	
+	<div class="panel panel-primary">
+           	 <div class="panel-heading" id ="table_data"><font size="3">Search </font></div>
+		 <div class="panel-body">
+		<form action="{{ url_for('goindex') }}" method="post">
+                
+                <label for="inputTheme" align="left" style = "position: relative" ><font size="3">Search by Theme</font></label>
+            
+                <input type="text" style="width: 400px; height: 40px; position: relative;"  name="inputTheme" id="inputTheme"  class="form-control" width:10px placeholder="Enter theme" required autofocus/>
+
+                <button type="submit"id="btnFindByTheme"   style="width: 200px; height: 40px; position: relative; margin-top: 5px" class="btn btn-lg btn-primary btn-block" value = "" type="button" width:20%>Search</button> 
+            </form>
+	
+		</div>
+	</div>
+
+  	<div class="page-header"><!--<h1 class="" style="float:left; margin-left:50px">World: </h1>--><center><h1 style="" id="searchedname"></center></h1>
+			
+		</div>
+	
+	<div class="panel panel-primary " >
+            <div class="panel-heading"><font size="3">World Information</font></div>
+            <div class="panel-body">
+		<div class="row" style="padding-left:10px;padding-right:10px">
+    			<div class="col-md-4" style="outline: 1px solid #4682B4;background-color:#d9d9d9">
+     				 <center><h3><font size="3">About Information</font></h3></center>
+				<table width="50%" style="border-color: transparent; padding: 10px">
+     				 <tr>
+       				<td colspan="2" style="border-color: transparent;padding:1px;width:18%"> <h5><b>Vocabulary:</b></h5 ></td>
+       				<td style="border-color: transparent; "> <a title=""style="text-decoration:none;color: #00569d;">
+					<span style="font-size:14px ;color:#00569d"><b id="vocabulary"></b></span></a>
+				</td>
+    				</tr>
+               		   	</table>
+				<br/>
+    				<table style="border-color: transparent">
+    				<tr style="width:40px">
+       				<td colspan="2" style="border-color: transparent;padding:1px;width:18% "><h5><b>Type:</b></h5></td>
+     				<td style="border-color: transparent; ">
+       				<a>
+               				<span style="font-size:14px ;color:#00569d"><b></b></span></a>
+      				 </td>
+       
+      				 </tr>
+     				 </table>	
+   	
+   			 </div>
+   			 <div class="col-md-4" style="outline: 1px solid #4682B4;background-color:#d9d9d9"">
+    				   <center><h3><font size="3">Hierarchy Information</font></h3></center>
+							 </div>
+			<div class="col-md-4" style="outline: 1px solid #4682B4;background-color:#d9d9d9"">
+    				   <center><h3><font size="3">Participating Worlds</font></h3></center>
+   			 </div>
+  </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary " >
+            <div class="panel-heading"><font size="3">Datasets</font></div>
+            <div class="panel-body data_tables"  ><!--Data related to associatiosn should be displayed --> 
+            <table class="table table-striped table-bordered">
+                  <thead class="thead-inverse" >
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody  id = "table_names" value = "none"	>
+                        
+                    </tbody>
+
+
+            </table>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading" id ="table_data" ><font size="3">Table Data</font></div>
+				
+	<svg width="1100" height="70" id="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    	</svg>
+	<input type="text" id="tuplename" style="display:none; width: 1000px;height:30px;border: 2px solid #555;margin-left:20px" name="tuple">
+	<button type="button" id="schemabutton" style="float:right;display:none;"class="btn btn-primary" onclick="showSchema()">Schema
+	</button>
+	<button type="button" id="schemabuttonclose" style="float:right;display:none;"class="btn btn-primary" onclick="closeSchema()">Close Schema</button>
+	<br/>
+         <div class="header_names" id="header_names">Click any from above table names
+	</div>
+        	   
+       	 </div>
+ 
+    	</div>
+</body>
+ 
+</html>
